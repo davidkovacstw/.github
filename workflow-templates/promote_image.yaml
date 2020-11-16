@@ -1,0 +1,24 @@
+name: Request Image Promotion
+
+on:
+  workflow_run:
+    workflows: ["Build, Test & Upload Service"]
+    branches: [master]
+    types: 
+      - completed
+
+env:
+  DEPLOY_SLACK_CHANNEL: "" # your slack channel here
+  DEPLOY_IMAGE_NAME: "" # your image name here
+
+jobs:
+  promote_docker_image:
+    name: Promote to Docker Release registry
+    runs-on: [self-hosted, docker]
+    container: ${{ secrets.K8S_DEPLOYER_BUILD_CONTAINER }}:3
+    
+    steps:
+      - name: Promote built artifact
+        run: k8s-deployment trigger-image-promotion
+        env:
+          GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}

@@ -1,0 +1,11 @@
+{
+  "name": "Promote Image",
+  "description": "Submits your master branch builds for image promotion to Docker Release registry",
+  "iconName": "example-icon",
+  "categories": [
+      "Dockerfile"
+  ],
+  "filePatterns": [
+      "^Dockerfile"
+  ]
+}
